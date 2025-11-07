@@ -89,6 +89,13 @@ function App() {
       alert('Token copied to clipboard!');
     }
   };
+  
+  onMessageListener().then((payload) => {
+     // console.log(payload);
+     const title = payload.notification?.title || 'New Message';
+     const body = payload.notification?.body || 'You have a new message';
+     setMessages(prev => [...prev, {title, body}]);
+  });
 
   return (
     <div className="app-container">
@@ -134,9 +141,6 @@ function App() {
               <div key={index} className="message-card">
                 <div className="message-header">
                   <strong>{message.title}</strong>
-                  <span className="message-time">
-                    {message.timestamp.toLocaleTimeString('ja-JP')}
-                  </span>
                 </div>
                 <div className="message-body">{message.body}</div>
               </div>
